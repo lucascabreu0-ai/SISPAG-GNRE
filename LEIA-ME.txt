@@ -1,0 +1,35 @@
+GERADOR DE REMESSA SISPAG (ITAU) PARA GNRE / DUA-ES
+====================================================
+
+INSTALACAO (uma vez por computador)
+1. Instale o Python (python.org). Na instalacao, marque "Add python.exe to PATH".
+2. De dois cliques em "1 - Instalar (so na primeira vez).bat".
+3. (Opcional, mas recomendado) Instale o Tesseract OCR, usado para guias em PDF
+   que sao so imagem (aconteceu com DUA do ES):
+   github.com/UB-Mannheim/tesseract/wiki -> instalador para Windows, pasta padrao.
+   Sem ele, esses PDFs aparecem na aba "Excecoes" e precisam ser pagos a parte.
+
+USO DIARIO
+1. Salve os PDFs das guias do dia (GNRE e DUA-ES, das duas empresas) na pasta "entrada".
+2. De dois cliques em "2 - Gerar remessa.bat".
+3. Abra a pasta "saida\AAAA-MM-DD":
+   - conferencia_GNRE_....xlsx  -> CONFIRA ANTES DE TUDO (abas Guias, Excecoes, Resumo)
+   - REM_GNRE_LONAFORT_....txt  -> subir no Itau Empresas da Lonafort
+   - REM_GNRE_GEOMEMBRANA_....txt -> subir no Itau Empresas da Geomembrana
+   - pdfs\                      -> PDFs que entraram em remessa (arquivados)
+4. PDFs que ficaram na pasta "entrada" tiveram problema: veja a aba "Excecoes".
+
+REGRAS IMPORTANTES
+- As guias vencem no dia: gere e suba a remessa no MESMO dia, antes do horario de corte.
+- Nunca suba o mesmo arquivo .txt duas vezes no banco.
+- Gerou uma remessa e NAO enviou? Libere as guias dela antes de gerar de novo:
+    py programa\gerar_remessa.py entrada --saida saida --substituir NOME_DO_ARQUIVO.txt
+  (os PDFs estarao em saida\data\pdfs -> copie de volta para "entrada")
+- Pagamento em outra data:  py programa\gerar_remessa.py entrada --saida saida --data 02/10/2026
+- Quem gera o arquivo NAO deve ser quem aprova no banco.
+
+ARQUIVOS DO PROGRAMA (pasta "programa")
+- config_sispag.json     -> dados bancarios das empresas
+- historico_remessas.csv -> NAO APAGUE. E o que impede pagar a mesma guia duas vezes.
+                            Faca copia de seguranca dele (ex.: rede/OneDrive).
+- leitor_gnre.py / gerar_remessa.py -> o programa.
